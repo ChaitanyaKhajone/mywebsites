@@ -35,18 +35,19 @@ searchBar.addEventListener("input", (e) => {
     renderDashboard(e.target.value);
 });
 
+const applyTheme = (theme) => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    themeToggleBtn.innerText = theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+};
+
 themeToggleBtn.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
-    
-    if (currentTheme === "dark") {
-        document.documentElement.setAttribute("data-theme", "light");
-        themeToggleBtn.innerText = "🌙 Dark Mode";
-    } else {
-        document.documentElement.setAttribute("data-theme", "dark");
-        themeToggleBtn.innerText = "☀️ Light Mode";
-    }
+    applyTheme(currentTheme === "dark" ? "light" : "dark");
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    applyTheme(savedTheme || "light");
     renderDashboard();
 });

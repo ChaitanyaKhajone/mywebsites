@@ -19,16 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let countdownInterval = null;
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            themeToggle.textContent = '🌙 Dark Mode';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️ Light Mode';
-        }
-    });
+    const applyTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        themeToggle.innerText = theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+    };
+
+    const savedTheme = localStorage.getItem("theme");
+    applyTheme(savedTheme || "light");
+
+    themeToggle.addEventListener("click", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        applyTheme(currentTheme === "dark" ? "light" : "dark");
+     });
 
     calculateBtn.addEventListener('click', () => {
         const dobValue = dobInput.value;
