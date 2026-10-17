@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Age Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container animate-fade-in">
+	<header>
+            <h1>Age Calculator</h1>
+            <button id="themeToggle" class="toggle-btn" aria-label="Toggle Theme">🌙 Dark Mode</button>
+        </header>  
+
+        <main>
+            <div class="input-section">
+                <label for="dob">Enter your Date of Birth:</label>
+                <input type="date" id="dob" required>
+                <button id="calculateBtn">Calculate Age</button>
+            </div>
+
+            <div id="wishBanner" class="wish-banner hidden"></div>
+
+            <div id="results" class="results-section hidden">
+                <div class="card">
+                    <h3>⏳ Exact Age</h3>
+                    <p id="exactAge">--</p>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Lifetime Totals</h3>
+                    <p><strong>Total Months:</strong> <span id="totalMonths">--</span></p>
+                    <p><strong>Total Days:</strong> <span id="totalDays">--</span></p>
+                </div>
+
+                <div class="card">
+                    <h3>📅 Birth Day of the Week</h3>
+                    <p id="birthDayOfWeek">--</p>
+                </div>
+
+                <div class="card">
+                    <h3>🎉 Next Birthday Countdown</h3>
+                    <p><strong>Day of the Week:</strong> <span id="nextBirthdayDay">--</span></p>
+                    <div id="countdownClock" class="countdown-clock">
+                        <div><span id="cdDays">00</span><label>Days</label></div>
+                        <div><span id="cdHours">00</span><label>Hours</label></div>
+                        <div><span id="cdMinutes">00</span><label>Minutes</label></div>
+                        <div><span id="cdSeconds">00</span><label>Seconds</label></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🚀 Upcoming Age Milestones</h3>
+                    <ul id="milestonesList" class="milestones-list"></ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

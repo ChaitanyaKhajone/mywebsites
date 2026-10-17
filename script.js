@@ -1,8 +1,7 @@
-const BASE_URL = "https://chaitanyankhajone.github.io/mywebsites/";
+const BASE_URL = "https://chaitanyakhajone.github.io/mywebsites/";
 
 const websitesArray = [
-    { name: "DEMO 1", link: "demo" },
-    { name: "DEMO 2", link: "demo" }
+    { name: "Advanced Age Calculator", link: "AdvancedAgeCalculator" }
 ];
 
 const gridContainer = document.getElementById("grid-container");
