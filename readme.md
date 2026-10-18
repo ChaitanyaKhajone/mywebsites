@@ -4,7 +4,7 @@ A clean, responsive **Websites Dashboard** built using pure HTML, CSS, and JavaS
 
 ## 🚀 Features
 
-* **Project Showcases:** Interactive cards linking directly to standalone web projects (Demo 1, Demo 2, etc.).
+* **Project Showcases:** Interactive cards linking directly to standalone web projects.
 * **Search Functionality:** Built-in search bar to quickly filter through listed websites.
 * **Theme Toggle:** Integrated dark/light mode toggle for a personalized user experience.
 * **Fully Responsive:** Optimized layout that adapts seamlessly across mobile, tablet, and desktop devices.
