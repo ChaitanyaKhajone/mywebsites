@@ -1,6 +1,7 @@
 const BASE_URL = "https://chaitanyakhajone.github.io/mywebsites/";
 const websitesArray = [
-    { name: "Advanced Age Calculator", link: "AdvancedAgeCalculator" }
+    { name: "Advanced Age Calculator", link: "AdvancedAgeCalculator" },
+    { name: "Password Generator", link: "PasswordGenerator" }
 ];
 const gridContainer = document.getElementById("grid-container");
 const themeToggleBtn = document.getElementById("theme-toggle");

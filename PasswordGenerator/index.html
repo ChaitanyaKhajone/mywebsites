@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Password Generator</h1>
+            <button id="theme-toggle" class="btn-theme">🌙 Dark Mode</button>
+        </header>
+        <div class="result-container">
+            <input type="text" id="password-display" readonly placeholder="Your Secure Password">
+            <button id="copy-btn" class="btn">Copy</button>
+        </div>
+        <div class="strength-container">
+            <div class="strength-label">Strength: <span id="strength-text">Weak</span></div>
+            <div class="strength-bar"><div id="strength-fill"></div></div>
+        </div>
+        <div class="settings-container">
+            <div class="setting-item">
+                <label for="length-slider">Length: <span id="length-val">16</span></label>
+                <input type="range" id="length-slider" min="6" max="64" value="16">
+            </div>
+            <div class="options-grid">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="uppercase" checked>
+                    <span>Uppercase (A-Z)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="lowercase" checked>
+                    <span>Lowercase (a-z)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="numbers" checked>
+                    <span>Numbers (0-9)</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="symbols" checked>
+                    <span>Symbols (!@#$%)</span>
+                </label>
+            </div>
+            <div class="extra-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="exclude-ambiguous">
+                    <span>Exclude Ambiguous (e.g. 1, l, 0, O)</span>
+                </label>
+            </div>
+        </div>
+        <button id="generate-btn" class="btn btn-large">Generate Password</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
