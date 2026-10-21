@@ -3,55 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Generate strong, customizable passwords directly in your browser.">
     <title>Password Generator</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
+    <main class="container">
         <header>
             <h1>Password Generator</h1>
-            <button id="theme-toggle" class="btn-theme">🌙 Dark Mode</button>
+            <button id="theme-toggle" class="btn-theme" type="button" aria-label="Switch to dark mode">🌙 Dark Mode</button>
         </header>
-        <div class="result-container">
-            <input type="text" id="password-display" readonly placeholder="Your Secure Password">
-            <button id="copy-btn" class="btn">Copy</button>
-        </div>
-        <div class="strength-container">
-            <div class="strength-label">Strength: <span id="strength-text">Weak</span></div>
-            <div class="strength-bar"><div id="strength-fill"></div></div>
-        </div>
-        <div class="settings-container">
+
+        <section aria-label="Generated password">
+            <div class="result-container">
+                <input
+                    type="text"
+                    id="password-display"
+                    readonly
+                    placeholder="Your secure password"
+                    aria-label="Generated password"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
+                <button id="copy-btn" class="btn" type="button">Copy</button>
+            </div>
+            <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+            <div class="strength-container">
+                <div class="strength-label">
+                    Estimated strength: <span id="strength-text">Not generated</span>
+                </div>
+                <div
+                    class="strength-bar"
+                    role="progressbar"
+                    aria-label="Estimated password strength"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                    aria-valuetext="Not generated"
+                    id="strength-bar"
+                >
+                    <div id="strength-fill" data-level="0"></div>
+                </div>
+                <p class="strength-note">Strength is an estimate based on length and available character types.</p>
+            </div>
+        </section>
+
+        <section class="settings-container" aria-label="Password settings">
             <div class="setting-item">
-                <label for="length-slider">Length: <span id="length-val">16</span></label>
+                <label for="length-slider">
+                    Length: <output id="length-val" for="length-slider">16</output>
+                </label>
                 <input type="range" id="length-slider" min="6" max="64" value="16">
             </div>
-            <div class="options-grid">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="uppercase" checked>
-                    <span>Uppercase (A-Z)</span>
-                </label>
-                <label class="checkbox-label">
-                    <input type="checkbox" id="lowercase" checked>
-                    <span>Lowercase (a-z)</span>
-                </label>
-                <label class="checkbox-label">
-                    <input type="checkbox" id="numbers" checked>
-                    <span>Numbers (0-9)</span>
-                </label>
-                <label class="checkbox-label">
-                    <input type="checkbox" id="symbols" checked>
-                    <span>Symbols (!@#$%)</span>
-                </label>
-            </div>
+
+            <fieldset class="options-fieldset">
+                <legend class="visually-hidden">Character types</legend>
+                <div class="options-grid">
+                    <label class="checkbox-label"><input type="checkbox" id="uppercase" checked><span>Uppercase (A–Z)</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="lowercase" checked><span>Lowercase (a–z)</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="numbers" checked><span>Numbers (0–9)</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="symbols" checked><span>Symbols (!@#$%)</span></label>
+                </div>
+            </fieldset>
+
             <div class="extra-options">
                 <label class="checkbox-label">
                     <input type="checkbox" id="exclude-ambiguous">
-                    <span>Exclude Ambiguous (e.g. 1, l, 0, O)</span>
+                    <span>Exclude ambiguous characters (1, l, I, 0, O, etc.)</span>
                 </label>
             </div>
-        </div>
-        <button id="generate-btn" class="btn btn-large">Generate Password</button>
-    </div>
-    <script src="script.js"></script>
+        </section>
+
+        <button id="generate-btn" class="btn btn-large" type="button">Generate Password</button>
+    </main>
 </body>
 </html>

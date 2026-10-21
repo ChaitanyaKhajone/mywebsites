@@ -3,26 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Websites Dashboard</title>
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="A personal dashboard for useful websites and tools.">
+    <title>My Static Websites Dashboard</title>
+    <script>
+        (() => {
+            try {
+                const savedTheme = localStorage.getItem("theme");
+                const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+                document.documentElement.dataset.theme =
+                    savedTheme === "dark" || savedTheme === "light" ? savedTheme : preferredTheme;
+            } catch (_) {
+                document.documentElement.dataset.theme =
+                    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/websites.js" defer></script>
+    <script src="assets/script.js" defer></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">My Websites Dashboard</div>
+    <header class="navbar">
+        <a class="nav-brand" href="./" aria-label="My Websites Dashboard home">
+            <span class="brand-mark" aria-hidden="true">CNK</span>
+            <span>My Static Websites Dashboard</span>
+        </a>
+
         <div class="nav-actions">
-            <input type="text" id="search-bar" class="search-input" placeholder="Search websites...">
-            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙 Mode</button>
+            <label class="sr-only" for="search-bar">Search websites</label>
+            <div class="search-wrap">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="search-icon">
+                    <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                    <path d="m16 16 4.2 4.2"></path>
+                </svg>
+                <input
+                    type="search"
+                    id="search-bar"
+                    class="search-input"
+                    placeholder="Search websites..."
+                    autocomplete="off"
+                    aria-controls="grid-container"
+                >
+                <button type="button" id="clear-search" class="clear-search" aria-label="Clear search" hidden>×</button>
+            </div>
+
+            <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="false">
+                <span id="theme-icon" aria-hidden="true">☾</span>
+                <span id="theme-label">Dark mode</span>
+            </button>
         </div>
-    </nav>
+    </header>
+
     <main class="dashboard-container">
-        <div id="grid-container" class="site-grid"></div>
+        <section class="websites-section" aria-labelledby="websites-heading">
+            <div class="section-heading">
+                <div>
+                    <h1 id="websites-heading">My Websites</h1>
+                    <p id="results-count" class="results-count" aria-live="polite">Loading websites…</p>
+                </div>
+
+                <label class="sr-only" for="category-filter">Filter by category</label>
+                <select id="category-filter" class="category-filter">
+                    <option value="all">All categories</option>
+                </select>
+            </div>
+
+            <div id="grid-container" class="site-grid"></div>
+
+            <div id="empty-state" class="empty-state" hidden>
+                <span class="empty-icon" aria-hidden="true">⌕</span>
+                <h2>No websites found</h2>
+                <p>Try another search term or choose a different category.</p>
+                <button type="button" id="reset-filters" class="secondary-btn">Clear filters</button>
+            </div>
+        </section>
+
+        <aside class="coming-soon" aria-label="Future updates">
+            <span class="coming-soon-icon" aria-hidden="true">✦</span>
+            <div>
+                <h2>More tools are on the way</h2>
+                <p>This dashboard will grow as new projects are added.</p>
+            </div>
+        </aside>
     </main>
-    <div class="bottom">
-        <h1> More Websites Coming Soon </h1>
-    </div>
+
     <footer class="footer">
-        <p>&copy; 2026 My Websites Dashboard by Chaitanya (CNK) All Rights Reserved.</p>
+        <p>© <span id="current-year">2026</span> My Static Websites Dashboard</p>
+        <p>Made with care by Chaitanya Khajone (CNK)</p>
     </footer>
-    <script src="assets/script.js"></script>
 </body>
 </html>
