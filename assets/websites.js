@@ -20,5 +20,12 @@ const websitesArray = [
         category: "Interactive",
         description: "Explore interactive mouse-reactive visual effects.",
         icon: "✦"
+    },
+    {
+      "name": "Snake Game",
+      "link": "SnakeGame",
+      "category": "Games",
+      "description": "Play the classic Snake game with customizable colors, sound effects, increasing difficulty, score tracking, game history, achievements, and a light/dark theme toggle.",
+      "icon": "🐍"
     }
 ];
