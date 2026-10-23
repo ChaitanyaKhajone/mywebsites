@@ -18,7 +18,7 @@ const websitesArray = [
         name: "Mouse Hover Web App",
         link: "MouseHoverWebApp",
         category: "Interactive",
-        description: "Explore interactive mouse-reactive visual effects.",
+        description: "Explore interactive mouse-reactive visual effects. Desktop and laptop recommended for the smoothest experience, as animations may run slowly on mobile devices.",
         icon: "✦"
     },
     {
