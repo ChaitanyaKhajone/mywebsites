@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087f70">
+  <meta name="description"
+    content="MedYntra+ static frontend demo. Uses sample data and browser local storage only; no backend API calls.">
+  <title>MedYntra+ | Healthcare Portal Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="app" class="app-shell">
+    <section class="replica-intro" id="replicaIntro">
+      <div class="intro-shell">
+        <div class="intro-brand"><span class="intro-mark">✚</span><span>MedYntra<span>+</span></span></div>
+        <div class="intro-label"><span class="intro-dot"></span> FRONTEND PROJECT · STATIC DEMO</div>
+        <h1>A replica made to<br><span>explore the experience.</span></h1>
+        <p class="intro-copy">This is an independent, static replica of the MedYntra+ frontend, created for learning and
+          demonstration. It runs on sample data in your browser and does not connect to the original backend.</p>
+        <div class="intro-notice"><span class="notice-symbol">i</span><span><b>Please note</b><br>Some features,
+            content, colours, or interactions may differ from the original website. Do not enter real medical or
+            personal information.</span></div>
+        <button class="intro-continue" id="continueToDemo">Continue to replica <span>→</span></button>
+        <div class="team-section">
+          <div class="team-heading">
+            <div>
+              <div class="intro-label">THE PEOPLE BEHIND IT</div>
+              <h2>Project team</h2>
+            </div>
+            <p>Meet the four members<br>who built this project.</p>
+          </div>
+          <div class="team-grid" id="teamMembers"></div>
+        </div>
+        <div class="intro-footer"><span>MedYntra+ · Frontend replica</span><span>Built for demonstration, not medical
+            use</span></div>
+      </div>
+    </section>
+
+    <section class="auth-screen hidden" id="authScreen">
+      <div class="auth-background"></div>
+      <div class="auth-shade"></div>
+      <div class="auth-trust-row">
+        <div class="auth-trust"><span>✓</span>
+          <div><b>Secure</b><small>256-bit Encryption</small></div>
+        </div>
+        <div class="auth-trust"><span>⌑</span>
+          <div><b>Trusted</b><small>Healthcare Ready</small></div>
+        </div>
+        <div class="auth-trust"><span>◷</span>
+          <div><b>24/7</b><small>Always Online</small></div>
+        </div>
+      </div>
+      <button class="demo-menu-button" id="demoMenuButton" aria-expanded="false"><span>☰</span> Demo accounts</button>
+      <div class="auth-original-layout">
+        <div class="auth-original-card">
+          <div class="auth-user-mark">♙</div>
+          <h2 id="authHeading">Welcome Back!</h2>
+          <p class="auth-original-subtitle" id="authSubheading">Login to your MedYntra account</p>
+          <form id="loginForm">
+            <label for="loginEmail">Email or Username</label>
+            <div class="original-input-wrap"><span>♙</span><input id="loginEmail" name="email" autocomplete="username"
+                placeholder="Email or Username" required></div>
+            <label for="loginPassword">Password</label>
+            <div class="original-input-wrap"><span>♧</span><input id="loginPassword" name="password" type="password"
+                autocomplete="current-password" placeholder="Password" required><button type="button"
+                id="togglePassword" class="password-toggle" aria-label="Show password">◉</button></div>
+            <div class="form-meta"><a href="#" id="forgotLink">Forgot Password?</a></div>
+            <p class="form-error" id="loginError" role="alert"></p>
+            <button class="btn btn-primary btn-wide" type="submit">Login <span>→</span></button>
+          </form>
+          <p class="auth-switch" id="registerPrompt">Don't have a patient account? <button id="showRegister">Sign
+              Up</button></p>
+          <p class="auth-legal">Static replica · No backend connection</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="demo-drawer" id="demoDrawer" aria-hidden="true">
+      <div class="drawer-head">
+        <div><span class="eyebrow green">QUICK ACCESS</span>
+          <h3>Demo accounts</h3>
+        </div><button class="icon-button" id="closeDemoDrawer" aria-label="Close demo accounts">✕</button>
+      </div>
+      <p class="muted small">Choose an account to fill the sign-in form. These credentials are for this frontend demo
+        only.</p>
+      <div id="demoAccountList"></div>
+      <div class="drawer-foot">New users created in this demo are saved in this browser's local storage.</div>
+    </aside>
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <main id="portal" class="portal hidden">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand"><span class="brand-mark">✚</span><span>MedYntra<span class="brand-plus">+</span></span>
+          </div><button class="mobile-close" id="closeSidebar">✕</button>
+        </div>
+        <div class="side-label">WORKSPACE</div>
+        <nav id="sideNav"></nav>
+        <div class="sidebar-bottom">
+          <div class="user-avatar" id="sideAvatar">P</div>
+          <div class="side-user"><b id="sideName">Patient</b><small id="sideRole">Patient</small></div><button
+            class="logout-icon" id="sideLogout" title="Log out">↪</button>
+        </div>
+      </aside>
+      <div class="portal-main">
+        <header class="topbar"><button class="mobile-menu" id="openSidebar" aria-label="Open menu">☰</button>
+          <div class="breadcrumb"><span>MedYntra+</span><span class="crumb-slash">/</span><b
+              id="currentSection">Dashboard</b></div>
+          <div class="topbar-right"><span class="demo-pill"><i></i> DEMO MODE</span>
+            <div class="top-user">
+              <div class="user-avatar small-avatar" id="topAvatar">P</div>
+              <div><b id="topName">Patient</b><small id="topEmail">patient@example.com</small></div>
+            </div><button class="btn btn-outline btn-sm" id="topLogout">Log out</button>
+          </div>
+        </header>
+        <div class="page-wrap" id="pageContent"></div>
+        <footer class="app-footer"><span>© 2026 MedYntra+ · Frontend demonstration</span><span>All data is sample data
+            stored locally in this browser.</span></footer>
+      </div>
+    </main>
+    <div class="toast" id="toast" role="status"></div>
+    <div class="modal-backdrop hidden" id="modalBackdrop">
+      <section class="modal" id="modal" role="dialog" aria-modal="true"></section>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

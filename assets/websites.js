@@ -27,5 +27,12 @@ const websitesArray = [
       "category": "Games",
       "description": "Play the classic Snake game with customizable colors, sound effects, increasing difficulty, score tracking, game history, achievements, and a light/dark theme toggle.",
       "icon": "🐍"
+    },
+    {
+        name: "MedYntra+",
+        link: "MedYntra",
+        category: "Healthcare Demo",
+        description: "A static healthcare portal replica featuring admin, doctor, and patient dashboards, appointment management, grievance handling, with demo data. Frontend-only demonstration.",
+        icon: "🏥"
     }
 ];
