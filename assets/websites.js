@@ -34,5 +34,12 @@ const websitesArray = [
         category: "Healthcare Demo",
         description: "A static healthcare portal replica featuring admin, doctor, and patient dashboards, appointment management, grievance handling, with demo data. Frontend-only demonstration.",
         icon: "🏥"
+    },
+    {
+        name: "QR Code Utility",
+        link: "QRCodeUtility",
+        category: "Utilities",
+        description: "Generate and scan QR codes for text, URLs, Wi-Fi, phone numbers, email, SMS, and vCard contacts. Customize QR codes, download PNG/SVG, and generate QR codes in batches.",
+        icon: "▦"
     }
 ];

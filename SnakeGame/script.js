@@ -70,7 +70,7 @@
       themeToggle.setAttribute("aria-pressed", String(dark));
       themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
     }
-    try { localStorage.setItem(THEME_KEY, normalized); } catch (_) {}
+    try { localStorage.setItem(THEME_KEY, normalized); } catch (_) { }
     drawBoard();
   }
 

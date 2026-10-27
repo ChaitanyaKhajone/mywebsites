@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f7f6">
+    <meta name="description" content="Generate, customize, and scan QR codes for text, URLs, Wi-Fi, contacts, and more.">
+    <title>QR Code Utility</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container animate-fade-in">
+        <header>
+            <h1>QR Code Utility</h1>
+            <button id="themeToggle" class="toggle-btn" type="button" aria-label="Switch to dark mode" aria-pressed="false">🌙 Dark Mode</button>
+        </header>
+
+        <main>
+            <div class="tab-list" role="tablist" aria-label="QR code tools">
+                <button id="generateTab" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="generatePanel">Generate</button>
+                <button id="scanTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="scanPanel">Scan</button>
+                <button id="batchTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="batchPanel">Batch</button>
+            </div>
+
+            <section id="generatePanel" class="tool-panel" role="tabpanel" aria-labelledby="generateTab">
+                <form id="qrForm" class="input-section">
+                    <label for="contentType">QR code type</label>
+                    <select id="contentType" name="contentType">
+                        <option value="text">Text</option>
+                        <option value="url">Website URL</option>
+                        <option value="wifi">Wi-Fi network</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone number</option>
+                        <option value="sms">SMS message</option>
+                        <option value="vcard">Contact card (vCard)</option>
+                        <option value="upi">UPI payment</option>
+                    </select>
+
+                    <div id="genericFields" class="field-group">
+                        <label for="qrContent">Text or content</label>
+                        <textarea id="qrContent" rows="4" placeholder="Type text or paste a URL…" maxlength="2500" required></textarea>
+                        <p class="field-hint"><span id="charCount">0</span>/2500 characters</p>
+                    </div>
+
+                    <div id="wifiFields" class="field-group" hidden>
+                        <label for="wifiSsid">Network name (SSID)</label>
+                        <input id="wifiSsid" type="text" maxlength="128" autocomplete="off" placeholder="Your Wi-Fi name">
+                        <label for="wifiSecurity">Security</label>
+                        <select id="wifiSecurity">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Open network</option>
+                        </select>
+                        <div id="wifiPasswordGroup" class="field-group">
+                            <label for="wifiPassword">Password</label>
+                            <input id="wifiPassword" type="password" maxlength="128" autocomplete="new-password" placeholder="Wi-Fi password">
+                        </div>
+                    </div>
+
+                    <div id="emailFields" class="field-group" hidden>
+                        <label for="emailAddress">Email address</label>
+                        <input id="emailAddress" type="email" placeholder="name@example.com" autocomplete="email">
+                        <label for="emailSubject">Subject (optional)</label>
+                        <input id="emailSubject" type="text" maxlength="160" placeholder="Email subject">
+                        <label for="emailBody">Message (optional)</label>
+                        <textarea id="emailBody" rows="3" maxlength="1000" placeholder="Write a message…"></textarea>
+                    </div>
+
+                    <div id="phoneFields" class="field-group" hidden>
+                        <label for="phoneNumber">Phone number</label>
+                        <input id="phoneNumber" type="tel" maxlength="40" placeholder="+91 98765 43210" autocomplete="tel">
+                    </div>
+
+                    <div id="smsFields" class="field-group" hidden>
+                        <label for="smsNumber">Phone number</label>
+                        <input id="smsNumber" type="tel" maxlength="40" placeholder="+91 98765 43210">
+                        <label for="smsMessage">Message (optional)</label>
+                        <textarea id="smsMessage" rows="3" maxlength="500" placeholder="Your SMS message…"></textarea>
+                    </div>
+
+                    <div id="vcardFields" class="field-group" hidden>
+                        <label for="contactName">Full name</label>
+                        <input id="contactName" type="text" maxlength="100" placeholder="Full name" autocomplete="name">
+                        <label for="contactPhone">Phone (optional)</label>
+                        <input id="contactPhone" type="tel" maxlength="40" placeholder="+91 98765 43210">
+                        <label for="contactEmail">Email (optional)</label>
+                        <input id="contactEmail" type="email" placeholder="name@example.com">
+                        <label for="contactOrg">Organization (optional)</label>
+                        <input id="contactOrg" type="text" maxlength="100" placeholder="Organization">
+                    </div>
+
+                    <div id="upiFields" class="field-group" hidden>
+                        <label for="upiId">UPI ID</label>
+                        <input id="upiId" type="text" maxlength="100" placeholder="name@bank">
+                        <label for="upiName">Payee name (optional)</label>
+                        <input id="upiName" type="text" maxlength="100" placeholder="Recipient name">
+                        <label for="upiAmount">Amount in INR (optional)</label>
+                        <input id="upiAmount" type="number" min="1" max="10000000" step="0.01" placeholder="e.g. 250.00">
+                        <p class="field-hint">This creates a UPI payment URI; verify details before paying.</p>
+                    </div>
+
+                    <details class="customize-options">
+                        <summary>Customize QR code</summary>
+                        <div class="customize-grid">
+                            <div>
+                                <label for="qrDark">QR color</label>
+                                <input id="qrDark" type="color" value="#111827">
+                            </div>
+                            <div>
+                                <label for="qrLight">Background</label>
+                                <input id="qrLight" type="color" value="#ffffff">
+                            </div>
+                            <div>
+                                <label for="qrSize">Size</label>
+                                <select id="qrSize">
+                                    <option value="192">192 px</option>
+                                    <option value="256" selected>256 px</option>
+                                    <option value="384">384 px</option>
+                                    <option value="512">512 px</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="qrError">Error correction</label>
+                                <select id="qrError">
+                                    <option value="L">Low</option>
+                                    <option value="M" selected>Medium</option>
+                                    <option value="Q">Quartile</option>
+                                    <option value="H">High</option>
+                                </select>
+                            </div>
+                        </div>
+                    </details>
+
+                    <div class="button-row">
+                        <button id="generateBtn" type="submit">Generate QR Code</button>
+                        <button id="clearBtn" class="secondary-btn" type="button">Clear</button>
+                    </div>
+                    <p id="formError" class="error-message" role="alert" hidden></p>
+                </form>
+
+                <section id="resultCard" class="result-card" aria-label="Generated QR code" hidden>
+                    <h2>Your QR Code</h2>
+                    <p id="resultSummary" class="result-summary">QR code generated successfully.</p>
+                    <div id="qrPreview" class="qr-preview">
+                        <canvas id="qrCanvas" aria-label="Generated QR code"></canvas>
+                    </div>
+                    <div class="button-row export-buttons">
+                        <button id="downloadPngBtn" type="button">Download PNG</button>
+                        <button id="downloadSvgBtn" class="secondary-btn" type="button">Download SVG</button>
+                        <button id="copyContentBtn" class="secondary-btn" type="button">Copy content</button>
+                    </div>
+                </section>
+            </section>
+
+            <section id="scanPanel" class="tool-panel" role="tabpanel" aria-labelledby="scanTab" hidden>
+                <div class="input-section">
+                    <h2>Scan a QR code</h2>
+                    <p class="muted">Use your camera or select an image containing a QR code. Camera access requires permission and a secure connection (HTTPS or localhost).</p>
+                    <div class="button-row">
+                        <button id="startCameraBtn" type="button">Start camera</button>
+                        <button id="stopCameraBtn" class="secondary-btn" type="button" disabled>Stop camera</button>
+                    </div>
+                    <div id="reader" class="reader" aria-label="Camera QR scanner"></div>
+                    <label for="scanImage">Or upload an image</label>
+                    <input id="scanImage" type="file" accept="image/*">
+                    <p id="scanError" class="error-message" role="alert" hidden></p>
+                </div>
+                <section id="scanResult" class="card" hidden>
+                    <h2>Scanned result</h2>
+                    <textarea id="scanOutput" rows="4" readonly aria-label="Scanned QR code content"></textarea>
+                    <div id="scanLinkWrap" class="scan-link-wrap" hidden>
+                        <p id="scanLinkLabel" class="field-hint"></p>
+                        <button id="openScannedLinkBtn" class="secondary-btn" type="button">Open detected action</button>
+                    </div>
+                    <div class="button-row">
+                        <button id="copyScanBtn" type="button">Copy result</button>
+                        <button id="clearScanBtn" class="secondary-btn" type="button">Clear result</button>
+                    </div>
+                </section>
+            </section>
+
+            <section id="batchPanel" class="tool-panel" role="tabpanel" aria-labelledby="batchTab" hidden>
+                <form id="batchForm" class="input-section">
+                    <h2>Batch QR generation</h2>
+                    <p class="muted">Enter one item per line. A QR code will be created for each non-empty line.</p>
+                    <label for="batchContent">Text or URLs (one per line)</label>
+                    <textarea id="batchContent" rows="6" maxlength="12000" placeholder="https://example.com&#10;Hello world&#10;Another item"></textarea>
+                    <label for="batchSize">QR size</label>
+                    <select id="batchSize">
+                        <option value="192">192 px</option>
+                        <option value="256" selected>256 px</option>
+                        <option value="384">384 px</option>
+                    </select>
+                    <div class="button-row">
+                        <button type="submit">Generate batch</button>
+                        <button id="clearBatchBtn" class="secondary-btn" type="button">Clear</button>
+                    </div>
+                    <p id="batchError" class="error-message" role="alert" hidden></p>
+                </form>
+                <section id="batchResults" class="batch-results" aria-label="Batch QR results" hidden>
+                    <div class="section-heading">
+                        <h2>Generated codes</h2>
+                        <button id="downloadBatchBtn" class="secondary-btn" type="button">Download all PNGs</button>
+                    </div>
+                    <div id="batchGrid" class="batch-grid"></div>
+                </section>
+            </section>
+
+            <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+        </main>
+    </div>
+</body>
+</html>
